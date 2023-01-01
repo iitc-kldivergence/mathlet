@@ -9,14 +9,14 @@
   <!-- Styles for the sliders and the chart -->
     <style>
       body {
-        background: linear-gradient(to right, black, #D3D3D3, black);
+        background: linear-gradient(to right, black, #888888, #D3D3D3, #888888, black);
         font-family: 'Garamond';
       }
 
-   .slider {
+  .slider {
   -webkit-appearance: none;
-  width: 20%;
-  height: 15px;
+  width: 25%;
+  height: 20px;
   background: gray;
   outline: none;
   opacity: 0.5;
@@ -31,59 +31,69 @@
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   background: black;
   cursor: pointer;
 }
 
 .slider::-moz-range-thumb {
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   background: black;
   cursor: pointer;
+}
+
+@media screen and (max-width: 1000px) {
+  html, body {
+    height: 100px;
+  }
 }
     </style>
   </head>
   <body>
     <!-- Chart container -->
     <canvas id="myChart" width="300" height="100"></canvas>
+
    <!-- About -->
     <a style="text-decoration: none;" href="https://github.com/Movarquine/iitc-kldivergence">
-   <div style="justify-content: center; display: flex; color: black; font-weight: bold; font-size: 25px;">About | Explanation</div>
+   <div style="justify-content: center; display: flex; color: black; font-weight: bold; font-size: 30px;">About & Explanation</div>
     </a>
     <div style="height: 5px; width: 100px;"></div>
-    <div style="justify-content: center; display: flex; font-size: 10px; color: #454545;">TOGGLE THE DISTANCE BY USING THE SLIDERS BELOW</div>
+    <div style="justify-content: center; display: flex; font-size: 15px; color: #454545;">TOGGLE THE DISTANCE BY USING THE SLIDERS</div>
+    <div style="height: 5px; width: 100px;"></div>
 
     <!-- Sliders to control mean and standard deviation for first distribution -->
     <div style="justify-content: center; margin-right: 5px; display: flex; align-items: center;">
-      <span style="margin-right: 5px;">Expected Dark:</span>
-      <input id="mean1Slider" type="range" min="-10" max="10" step="0.1" value="2" class="slider">
+      <span style="font-size: 25px; margin-right: 5px;">Dark μ:</span>
+      <input id="mean1Slider" type="range" min="-9" max="9" step="1" value="2" class="slider">
       <span id="mean1Value" style="margin-left: 5px;">0</span>
     </div>
     <div style="justify-content: center; margin-right: 5px; display: flex; align-items: center;">
-      <span style="margin-right: 5px;">Deviated Dark:</span>
-      <input id="stddev1Slider" type="range" min="1" max="10" step="1" value="1" class="slider">
+      <span style="font-size: 25px; margin-right: 5px;">Dark σ:</span>
+      <input id="stddev1Slider" type="range" min="1" max="9" step="1" value="1" class="slider">
       <span id="stddev1Value" style="margin-left: 5px;">1</span>
     </div>
 
     <!-- Sliders to control mean and standard deviation for second distribution -->
     <div style="justify-content: center; margin-right: 5px; display: flex; align-items: center;">
-      <span style="margin-right: 5px;">Expected Fair:</span>
-      <input id="mean2Slider" type="range" min="-10" max="10" step="0.1" value="-2" class="slider">
+      <span style="font-size: 25px; margin-right: 5px;">Fair μ:</span>
+      <input id="mean2Slider" type="range" min="-9" max="9" step="1" value="-2" class="slider">
       <span id="mean2Value" style="margin-left: 5px;">0</span>
     </div>
     <div style="justify-content: center; margin-right: 5px; display: flex; align-items: center;">
-      <span style="margin-right: 5px;">Deviated Fair:</span>
-      <input id="stddev2Slider" type="range" min="1" max="10" step="1" value="1" class="slider">
+      <span style="font-size: 25px; margin-right: 5px;">Fair σ:</span>
+      <input id="stddev2Slider" type="range" min="1" max="9" step="1" value="1" class="slider">
       <span id="stddev2Value" style="margin-left: 5px;">1</span>
     </div>
 
+    <div style="height: 5px; width: 100px;"></div>
+    
     <!-- Display Kullback-Leibler divergence -->
     <div style="justify-content: center; margin-right: 5px; display: flex; align-items: center;">
-      <span style="margin-right: 5px; font-weight: bold;">Kullback-Leibler Divergence (in nats):</span>
-      <span id="klValue" style="margin-left: 5px; font-weight: bold;">0</span>
-      <span style="margin-left: 5px; font-weight:bold;">bits of information required for synchronization</span>
+      <span style="font-size: 20px; margin-right: 5px; font-weight: bold;">KL Divergence:</span>
+      <span id="klValue" style="font-size: 20px; margin-left: 2px; font-weight: bold;">0</span>
+      <span style="font-size: 20px; margin-left: 5px; font-weight:bold;">bits of info required for sync</span>
     </div>
 
     <!-- JavaScript to draw chart and update values -->
@@ -141,7 +151,7 @@
               label: 'Fair',
               data: generateData(mean2Slider.value, stddev2Slider.value),
               fill: true,
-              backgroundColor: 'rgba(255, 255, 255, 0.7)',
+              backgroundColor: 'rgba(230, 230, 230, 0.5)',
 	  borderWidth: 0,
               pointRadius: 0, // Remove points from curve
               lineTension: 0, // Make curve smooth
